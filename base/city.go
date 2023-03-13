@@ -63,7 +63,7 @@ func (a *City) Y() float64 {
 	return a.y
 }
 
-func (a *City) ID() uint{
+func (a *City) ID() uint {
 	return a.id
 }
 
