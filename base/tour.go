@@ -98,7 +98,7 @@ func (a Tour) RouteByIDs(firstID uint) []uint {
 		route = append(route, c.id)
 	}
 
-	fmt.Printf("tourCities: %++v\nlen: %d\nRoute: %++v", a.tourCities, len(a.tourCities), route)
+	fmt.Printf("tourCities: %++v\nlen: %d\nroute: %v", a.tourCities, len(a.tourCities), route)
 
 	// turn route to set firstID to index 0
 	firstIndex := 0
@@ -110,7 +110,7 @@ func (a Tour) RouteByIDs(firstID uint) []uint {
 	}
 	rotatedRoute := route[firstIndex:]
 	if firstIndex > 0 {
-		rotatedRoute = append(rotatedRoute, (route[0:(firstIndex - 1)])...)
+		rotatedRoute = append(rotatedRoute, (route[:firstIndex])...)
 	}
 
 	return rotatedRoute
