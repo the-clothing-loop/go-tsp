@@ -68,14 +68,14 @@ func main() {
 	//tspRandom()
 	log.Println("Initialization completed")
 	log.Println("Begin genetic algorithm")
-	testTour := tspGA(&tm, noGen);
+	testTour := tspGA(&tm, noGen)
 
 	fmt.Print(testTour)
 }
 
 // tspGA : Travelling sales person with genetic algorithm
 // input :- TourManager, Number of generations
-func tspGA(tm *base.TourManager, gen int)(*base.Tour) {
+func tspGA(tm *base.TourManager, gen int) *base.Tour {
 	p := base.Population{}
 	p.InitPopulation(popSize, *tm)
 
@@ -126,7 +126,7 @@ func tspGA(tm *base.TourManager, gen int)(*base.Tour) {
 	log.Println("Initial tour distance: ", iTourDistance)
 	log.Println("Final tour distance: ", fTourDistance)
 
-	return fFit;
+	return fFit
 
 }
 
@@ -177,15 +177,15 @@ func TourToPoints(t *base.Tour) plotter.XYLabels {
 	labels := make([]string, tLen+1)
 
 	c0 := t.GetCity(0)
-	pts[0].X = float64(c0.X())
-	pts[0].Y = float64(c0.Y())
-	pts[tLen].X = float64(c0.X())
-	pts[tLen].Y = float64(c0.Y())
+	pts[0].X = c0.X()
+	pts[0].Y = c0.Y()
+	pts[tLen].X = c0.X()
+	pts[tLen].Y = c0.Y()
 	labels[0] = fmt.Sprintf("%d, %d, %d", 0, int(c0.X()), int(c0.Y()))
 	for i := 1; i < tLen; i++ {
 		c := t.GetCity(i)
-		pts[i].X = float64(c.X())
-		pts[i].Y = float64(c.Y())
+		pts[i].X = c.X()
+		pts[i].Y = c.Y()
 		labels[i] = fmt.Sprintf("%d, %d, %d", i, int(c.X()), int(c.Y()))
 	}
 	xylabels := plotter.XYLabels{XYs: pts, Labels: labels}

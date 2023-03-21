@@ -77,9 +77,9 @@ func Crossover(p1 base.Tour, p2 base.Tour) base.Tour {
 			msCity += p2.GetCity(i).String() + " "
 		}
 	}
-	log.Println(msCity)
-	log.Println(p2s)
-	log.Println(len(p2s))
+	// log.Println(msCity)
+	// log.Println(p2s)
+	// log.Println(len(p2s))
 	return c
 }
 

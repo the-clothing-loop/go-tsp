@@ -8,16 +8,16 @@ import (
 
 // City : coordinates of city
 type City struct {
-	x float64
-	y float64
+	x  float64
+	y  float64
 	id uint
 }
 
 // GenerateRandomCity : Generate city with random coordinates
 func GenerateRandomCity() City {
 	c := City{}
-	c.x = rand.Float64()*(100) * 100
-	c.y = rand.Float64()*(100) * 100
+	c.x = rand.Float64() * (100) * 100
+	c.y = rand.Float64() * (100) * 100
 	return c
 }
 
@@ -38,21 +38,18 @@ func (a *City) SetLocation(x float64, y float64) {
 
 // DistanceTo : distance of current city to target city
 func (a *City) DistanceTo(c City) float64 {
-	idx := a.x - c.x
-	idy := a.y - c.y
+	dx := a.x - c.x
+	dy := a.y - c.y
 
-	if idx < 0 {
-		idx = -idx
+	if dx < 0 {
+		dx = -dx
 	}
-	if idy < 0 {
-		idy = -idy
+	if dy < 0 {
+		dy = -dy
 	}
 
-	fdx := float64(idx)
-	fdy := float64(idy)
-
-	fd := math.Sqrt((fdx * fdx) + (fdy * fdy))
-	return fd
+	d := math.Sqrt((dx * dx) + (dy * dy))
+	return d
 }
 
 func (a *City) X() float64 {
@@ -73,7 +70,7 @@ func (a City) String() string {
 
 // ShuffleCities : return a shuffled []City given input []City
 func ShuffleCities(in []City) []City {
-	out := make([]City, len(in), cap(in))
+	out := make([]City, len(in))
 	perm := rand.Perm(len(in))
 	for i, v := range perm {
 		out[v] = in[i]

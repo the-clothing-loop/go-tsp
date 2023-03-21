@@ -1,6 +1,7 @@
 package base
 
 import (
+	"fmt"
 	"strconv"
 )
 
@@ -89,4 +90,28 @@ func (a Tour) String() string {
 		s += strconv.Itoa(i) + c.String() + "|"
 	}
 	return s
+}
+
+func (a Tour) RouteByIDs(firstID uint) []uint {
+	route := make([]uint, 0, len(a.tourCities))
+	for _, c := range a.tourCities {
+		route = append(route, c.id)
+	}
+
+	fmt.Printf("tourCities: %++v\nlen: %d\nRoute: %++v", a.tourCities, len(a.tourCities), route)
+
+	// turn route to set firstID to index 0
+	firstIndex := 0
+	for i, v := range route {
+		if v == firstID {
+			firstIndex = i
+			break
+		}
+	}
+	rotatedRoute := route[firstIndex:]
+	if firstIndex > 0 {
+		rotatedRoute = append(rotatedRoute, (route[0:(firstIndex - 1)])...)
+	}
+
+	return rotatedRoute
 }
