@@ -30,9 +30,9 @@ func TestTsp(t *testing.T) {
 
 	tour, _ := TspGA(cities, 20)
 
-	route := tour.RouteByIDs(1)
+	route := tour.RouteByIDs(1, 2)
 
-	if !(assert.ObjectsAreEqual([]uint{1, 2, 3, 4, 5}, route) || assert.ObjectsAreEqual([]uint{1, 5, 4, 3, 2}, route)) {
+	if !assert.ObjectsAreEqual([]uint{1, 2, 3, 4, 5}, route) {
 		assert.Fail(t, "Incorrect route: %v", route)
 	}
 }
@@ -53,12 +53,11 @@ func BenchmarkTestTsp(b *testing.B) {
 			defer wg.Done()
 			tour, _ := TspGA(cities, 20)
 
-			route := tour.RouteByIDs(1)
-			if !(assert.ObjectsAreEqual([]uint{1, 2, 3, 4, 5}, route) || assert.ObjectsAreEqual([]uint{1, 5, 4, 3, 2}, route)) {
+			route := tour.RouteByIDs(1, 2)
+			if !assert.ObjectsAreEqual([]uint{1, 2, 3, 4, 5}, route) {
 				assert.Fail(b, "Incorrect route: %v", route)
 			}
 		}()
-
 	}
 	wg.Wait()
 }

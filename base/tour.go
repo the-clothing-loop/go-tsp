@@ -1,7 +1,6 @@
 package base
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -92,26 +91,62 @@ func (a Tour) String() string {
 	return s
 }
 
-func (a Tour) RouteByIDs(firstID uint) []uint {
+// Return an ordered slice of the tour
+// See this as a route listed by the IDs
+// The firstID argument will be the first ID in the result
+// The firstHalfID argument will be in the first half of the result
+func (a Tour) RouteByIDs(firstID, firstHalfID uint) []uint {
 	route := make([]uint, 0, len(a.tourCities))
 	for _, c := range a.tourCities {
 		route = append(route, c.id)
 	}
 
-	fmt.Printf("tourCities: %++v\nlen: %d\nroute: %v", a.tourCities, len(a.tourCities), route)
-
 	// turn route to set firstID to index 0
-	firstIndex := 0
-	for i, v := range route {
-		if v == firstID {
-			firstIndex = i
+	return reorder(route, firstID, firstHalfID)
+}
+
+// reorder `arr` to return a slice
+//
+// `a` is the first value inside the return slice
+// `b` is a value somewhere inside the first half of the return slice
+func reorder(arr []uint, a, b uint) []uint {
+	if len(arr) < 2 {
+		return arr
+	}
+
+	aIndex := -1
+	for i, v := range arr {
+		if v == a {
+			aIndex = i
 			break
 		}
 	}
-	rotatedRoute := route[firstIndex:]
-	if firstIndex > 0 {
-		rotatedRoute = append(rotatedRoute, (route[:firstIndex])...)
+
+	first := arr[aIndex]
+	next := []uint{}
+	if aIndex < len(arr) {
+		next = arr[aIndex+1:]
+	}
+	if aIndex > 0 {
+		next = append(next, arr[:aIndex]...)
 	}
 
-	return rotatedRoute
+	isBInFirstHalf := false
+	for _, v := range next[:len(next)/2] {
+		if v == b {
+			isBInFirstHalf = true
+		}
+	}
+	if !isBInFirstHalf {
+		reverse(next)
+	}
+
+	arr = append([]uint{first}, next...)
+	return arr
+}
+
+func reverse[S ~[]E, E any](s S) {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		s[i], s[j] = s[j], s[i]
+	}
 }

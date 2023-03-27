@@ -44,7 +44,7 @@ func Crossover(p1 base.Tour, p2 base.Tour) base.Tour {
 	ep := (sp + nc) % size
 	// Parent 2 slots
 	p2s := make([]int, 0, size-nc)
-	log.Println(size, sp, nc, ep) // For debugging
+	//log.Println(size, sp, nc, ep) // For debugging
 	// Populate child with parent 1
 	if sp < ep {
 		for i := 0; i < size; i++ {
@@ -91,7 +91,7 @@ func Mutation(in *base.Tour) {
 		if rand.Float64() < mutationRate {
 			// Select 2nd city to perform swap
 			p2 := int(float64(in.TourSize()) * rand.Float64())
-			log.Println("Mutation occured", p1, "swap", p2)
+			//log.Println("Mutation occured", p1, "swap", p2)
 			// Temp store city
 			c1 := in.GetCity(p1)
 			c2 := in.GetCity(p2)
