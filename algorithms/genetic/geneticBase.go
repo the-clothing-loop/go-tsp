@@ -1,4 +1,4 @@
-package geneticAlgorithm
+package genetic
 
 import (
 	"log"

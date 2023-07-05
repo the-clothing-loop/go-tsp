@@ -26,3 +26,9 @@ The program can be tweaked by modifying the global variables in
 - [Thorough read on genetic algorithm on "tutorialspoint"](https://www.tutorialspoint.com/genetic_algorithms/index.htm) 
 - [Java implementation on "theprojectspot"](http://www.theprojectspot.com/tutorial-post/applying-a-genetic-algorithm-to-the-travelling-salesman-problem/5)
 - [Additional reading material on "analyticsvidhya](https://www.analyticsvidhya.com/blog/2017/07/introduction-to-genetic-algorithm/)
+
+- https://www.geeksforgeeks.org/travelling-salesman-problem-using-dynamic-programming/
+  
+- https://medium.com/@damien.leroux.pro/benchmark-an-exact-algorithm-solving-the-traveling-salesman-problem-with-go-e502b0ca3d0e
+
+- https://github.com/medchik/Travelling-Salesman-Problem-Approximate-Solution-using-MST

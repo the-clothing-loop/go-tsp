@@ -7,9 +7,11 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"time"
 
+	ga "github.com/the-clothing-loop/go-tsp/algorithms/genetic"
+	mst "github.com/the-clothing-loop/go-tsp/algorithms/mst"
 	"github.com/the-clothing-loop/go-tsp/base"
-	ga "github.com/the-clothing-loop/go-tsp/geneticAlgorithm"
 
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
@@ -24,8 +26,9 @@ var (
 	// To store results
 	rootpath = "tsp"
 	// Define seed for default rand
-	seed = int64(1504372704)
-	//seed = time.Now().Unix()
+	// seed = int64(1504372704)
+	seed           = time.Now().Unix()
+	numberOfCities = 100
 
 	// Number of generation to loop through
 	noGen = 100
@@ -53,24 +56,16 @@ func main() {
 	fmt.Println("seed: ", seed)
 
 	// Init TourManager
-	tm := base.TourManager{}
-	tm.NewTourManager()
-
-	// Generate Cities
-	var cities []base.City
-	cities = *initRandomCities(20)
-
-	// Add cities to TourManager
-	for _, v := range cities {
-		tm.AddCity(v)
-	}
+	tm := base.InitRandomTourManager(numberOfCities)
 
 	//tspRandom()
 	log.Println("Initialization completed")
 	log.Println("Begin genetic algorithm")
-	testTour := tspGA(&tm, noGen)
+	tspGA(&tm, noGen)
 
-	fmt.Print(testTour)
+	log.Println("Begin MST")
+	tspMST(&tm)
+
 }
 
 // tspGA : Travelling sales person with genetic algorithm
@@ -127,7 +122,25 @@ func tspGA(tm *base.TourManager, gen int) *base.Tour {
 	log.Println("Final tour distance: ", fTourDistance)
 
 	return fFit
+}
 
+func tspMST(tm *base.TourManager) *base.Tour {
+	distances := tm.GetDistanceMatrix()
+	minimunCost, optimalPath := mst.MST(distances)
+
+	fmt.Println("MST")
+	fmt.Println("Final tour distance: ", minimunCost)
+	// fmt.Println(optimalPath)
+
+	tour := &base.Tour{}
+	tour.InitTour(tm.NumberOfCities())
+	for i, v := range optimalPath[:len(optimalPath)-1] {
+		tour.SetCity(i, tm.GetCity(v))
+	}
+
+	visualization(tour, 0, 0)
+
+	return tour
 }
 
 // Save tour as graph
@@ -190,13 +203,4 @@ func TourToPoints(t *base.Tour) plotter.XYLabels {
 	}
 	xylabels := plotter.XYLabels{XYs: pts, Labels: labels}
 	return xylabels
-}
-
-func initRandomCities(cityCount int) *[]base.City {
-	cities := make([]base.City, 0, cityCount)
-
-	for i := 0; i < cityCount; i++ {
-		cities = append(cities, base.GenerateRandomCity())
-	}
-	return &cities
 }

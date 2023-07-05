@@ -1,8 +1,8 @@
 package tsp
 
 import (
+	ga "github.com/the-clothing-loop/go-tsp/algorithms/genetic"
 	"github.com/the-clothing-loop/go-tsp/base"
-	ga "github.com/the-clothing-loop/go-tsp/geneticAlgorithm"
 )
 
 // tspGA : Travelling sales person with genetic algorithm
